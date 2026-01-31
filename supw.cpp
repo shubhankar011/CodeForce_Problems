@@ -1,24 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 int main(){
-    int n,sum = 0,count = 0;
+    long long int n;
     cin>>n;
-    vector<long long> arr(n);
-    for (int i = 0; i < n; i++)
+    vector<long long int> mini(n);
+    for(int i = 0; i < n; i++) cin>>mini[i];
+    vector<long long int> dp(n);
+    dp[0] = mini[0];
+    dp[1] = mini[1];
+    dp[2] = mini[2];
+    for (int i = 3; i < n; i++)
     {
-        cin>>arr[i];
+        dp[i] = mini[i] + min({dp[i-1],dp[i-2],dp[i-3]});
     }
-    vector<vector<int>> arr2;
-    auto chunks = 3;
-    for (auto i = arr.begin(); i < arr.end(); i+=chunks)
-    {
-        auto end = (distance(i, arr.end()) >= chunks) ? (i + chunks) : arr.end();
-        arr2.emplace_back(i,end);
-    }
-    for (auto row : arr2) {
-        sort(row.begin(),row.end());
-        sum+= (row[0]); 
-    }
-    cout<<sum;
+    cout<<min({dp[n-1],dp[n-2],dp[n-3]});
+    
     return 0;
 }
